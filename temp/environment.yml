@@ -1,0 +1,9 @@
+name: dip
+dependencies:
+  - python=3.6.9
+  - matplotlib
+  - numpy
+  - opencv
+  - pip:
+    - rawpy
+    - imageio
