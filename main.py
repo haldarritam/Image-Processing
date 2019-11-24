@@ -1,10 +1,37 @@
+import argparse
 import os
+import vignette_correction
 
-vignette_tool_path = '~/Desktop/Image-Processing/vignette_correction'
-matlab_path = '/Applications/MATLAB_R2019b.app/bin/matlab '
-matlab_flags = '-nodesktop -nojvm '
-app_run_command = "-r 'vignette_removal '~/Desktop/Image-Processing/out_images/denoise_only' '~/Desktop/Image-Processing/out_images'; exit;';"
+if __name__ == "__main__":
+    # ----- Command line argument parser -----
+    parser = argparse.ArgumentParser(description='Batch Image Editor', fromfile_prefix_chars='@')
+    parser.add_argument('-in_path', help='Path for the input images.', default='~/Desktop/Image-Processing/orig_images',type=str, metavar='default=~/Desktop/Image-Processing/orig_images')
+    parser.add_argument('-out_path', help='Path where output images will be written to.', default='~/Desktop/Image-Processing/out_images', type=str, metavar='default=~/Desktop/Image-Processing/out_images')
+    parser.add_argument('-vig_tool_path', help='Path to the vignette removal tool.', default='~/Desktop/Image-Processing/vignette_correction', type=str, metavar="default='~/Desktop/Image-Processing/vignette_correction'")
+    parser.add_argument('-matlab_path', help='Path to the Matlab executable.', default='/Applications/MATLAB_R2019b.app/bin/matlab', type=str, metavar="default='/Applications/MATLAB_R2019b.app/bin/matlab'")
+    parser.add_argument('-vig_red_mth', help='Vignette reduction method: [lens][auto].', default='auto', type=str, metavar="default=auto")
+    parser.add_argument('-lens_model', help='Lens vignette model file.', type=str, metavar="No default. Mandatory if -vig_red_mth is 'lens'")
 
-vignette_fix_run_command = "cd " + vignette_tool_path + " && " + matlab_path + matlab_flags + app_run_command
+    # Reading command line arguments
+    args = vars(parser.parse_args())  
+    vignette_tool_path = args['vig_tool_path']
+    matlab_path = args['matlab_path']
+    in_path = args['in_path']
+    out_path = args['out_path']
+    vig_red_mth = args['vig_red_mth']
+    lens_model = args['lens_model']
 
-os.system(vignette_fix_run_command)
+    # Validating command line options
+    if vig_red_mth == 'lens' and lens_model == None:
+        print("Lens model image file is required for the chosen vignette removal method.\n" +
+              "Please provide a lens model image using the -lens_model parameter. Use -help for further assistance.\nAborting...")
+        quit()
+
+    vig_aux_data = {'lens_model': lens_model, 'out_path': out_path, 'vignette_tool_path': vignette_tool_path, 'matlab_path': matlab_path}
+
+
+    # ----- Noise Reduction-----
+
+    # ----- Vignette Removal-----
+    vignette_correction.run_method(vig_red_mth, vig_aux_data)
+            
