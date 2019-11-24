@@ -30,8 +30,16 @@ if __name__ == "__main__":
     vig_aux_data = {'lens_model': lens_model, 'out_path': out_path, 'vignette_tool_path': vignette_tool_path, 'matlab_path': matlab_path}
 
 
-    # ----- Noise Reduction-----
+    for filename in os.listdir(in_path):
+        if filename.endswith(".cr2"): 
+            # ----- Noise Reduction-----
 
-    # ----- Vignette Removal-----
+            # ----- Lens Model Vignette Removal -----
+            if vig_red_mth == 'lens':
+                print('Lens vignette removal')
+
+
+    if vig_red_mth == 'auto'
+    # ----- Auto Vignette Removal-----
     vignette_correction.run_method(vig_red_mth, vig_aux_data)
             
