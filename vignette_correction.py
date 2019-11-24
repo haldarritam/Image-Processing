@@ -1,4 +1,6 @@
-def run_method(vig_red_mth, vig_aux_data):
+import os
+
+def run_method(vig_red_mth, vig_aux_data, image=None):
     '''
     Performs vignette correction.
     vig_aux_data is a dictionary containing:
@@ -7,6 +9,7 @@ def run_method(vig_red_mth, vig_aux_data):
         out_path: output path to write the vignette corrected images to
         vignette_tool_path: path for the auxiliary tool to perform the auto method. Can be set to None if method is lens
         matlab_path: path for the Matlab executable. Can be set to None if method is lens.
+    image: image whose vignette needs to be fixed. Can be set to None if method is auto.
     '''
 
     lens_model = vig_aux_data.get('lens_model')

@@ -5,9 +5,9 @@ import vignette_correction
 if __name__ == "__main__":
     # ----- Command line argument parser -----
     parser = argparse.ArgumentParser(description='Batch Image Editor', fromfile_prefix_chars='@')
-    parser.add_argument('-in_path', help='Path for the input images.', default='~/Desktop/Image-Processing/orig_images',type=str, metavar='default=~/Desktop/Image-Processing/orig_images')
-    parser.add_argument('-out_path', help='Path where output images will be written to.', default='~/Desktop/Image-Processing/out_images', type=str, metavar='default=~/Desktop/Image-Processing/out_images')
-    parser.add_argument('-vig_tool_path', help='Path to the vignette removal tool.', default='~/Desktop/Image-Processing/vignette_correction', type=str, metavar="default='~/Desktop/Image-Processing/vignette_correction'")
+    parser.add_argument('-in_path', help='Path for the input images.', default='/Users/FelipeClark/Desktop/Image-Processing/orig_images',type=str, metavar='default=/Users/FelipeClark/Desktop/Image-Processing/orig_images')
+    parser.add_argument('-out_path', help='Path where output images will be written to.', default='/Users/FelipeClark/Desktop/Image-Processing/out_images', type=str, metavar='default=/Users/FelipeClark/Desktop/Image-Processing/out_images')
+    parser.add_argument('-vig_tool_path', help='Path to the vignette removal tool.', default='/Users/FelipeClark/Desktop/Image-Processing/vignette_correction', type=str, metavar="default='/Users/FelipeClark/Desktop/Image-Processing/vignette_correction'")
     parser.add_argument('-matlab_path', help='Path to the Matlab executable.', default='/Applications/MATLAB_R2019b.app/bin/matlab', type=str, metavar="default='/Applications/MATLAB_R2019b.app/bin/matlab'")
     parser.add_argument('-vig_red_mth', help='Vignette reduction method: [lens][auto].', default='auto', type=str, metavar="default=auto")
     parser.add_argument('-lens_model', help='Lens vignette model file.', type=str, metavar="No default. Mandatory if -vig_red_mth is 'lens'")
@@ -35,11 +35,12 @@ if __name__ == "__main__":
             # ----- Noise Reduction-----
 
             # ----- Lens Model Vignette Removal -----
+            image = None # TODO: image must be updated to the opened image matrix
             if vig_red_mth == 'lens':
-                print('Lens vignette removal')
+                vignette_correction.run_method(vig_red_mth, vig_aux_data, image)
 
 
-    if vig_red_mth == 'auto'
-    # ----- Auto Vignette Removal-----
-    vignette_correction.run_method(vig_red_mth, vig_aux_data)
+    if vig_red_mth == 'auto':
+        # ----- Auto Vignette Removal-----
+        vignette_correction.run_method(vig_red_mth, vig_aux_data)
             
