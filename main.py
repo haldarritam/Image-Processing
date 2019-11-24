@@ -11,6 +11,7 @@ if __name__ == "__main__":
     parser.add_argument('-matlab_path', help='Path to the Matlab executable.', default='/Applications/MATLAB_R2019b.app/bin/matlab', type=str, metavar="default='/Applications/MATLAB_R2019b.app/bin/matlab'")
     parser.add_argument('-vig_red_mth', help='Vignette reduction method: [lens][auto].', default='auto', type=str, metavar="default=auto")
     parser.add_argument('-lens_model', help='Lens vignette model file.', type=str, metavar="No default. Mandatory if -vig_red_mth is 'lens'")
+    parser.add_argument('-noise_red_mth', help='Noise reduction method: [low-pass][average][median]', default='average', type=str, metavar="default=average")
 
     # Reading command line arguments
     args = vars(parser.parse_args())  
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     out_path = args['out_path']
     vig_red_mth = args['vig_red_mth']
     lens_model = args['lens_model']
+    noise_red_mth = args['noise_red_mth']
 
     # Validating command line options
     if vig_red_mth == 'lens' and lens_model == None:
@@ -33,6 +35,15 @@ if __name__ == "__main__":
     for filename in os.listdir(in_path):
         if filename.endswith(".cr2"): 
             # ----- Noise Reduction-----
+            if noise_red_mth == 'low-pass':
+                print("Low pass")
+            elif noise_red_mth == 'average':
+                print("Average")
+            elif noise_red_mth == 'median':
+                print("Median")
+            else:
+                print("No noise filtering method will run.")
+
 
             # ----- Lens Model Vignette Removal -----
             image = None # TODO: image must be updated to the opened image matrix
