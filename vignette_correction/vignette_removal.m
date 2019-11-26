@@ -23,7 +23,7 @@ for file = files'
     if out_path(end) ~= "/"
     output_file = out_path+"/"+file.name;
     else
-    output_file = out_path+file.name;
+    output_file = [out_path file.name];
     end
  
     imwrite(im_vign_corrected, output_file);
