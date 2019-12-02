@@ -171,7 +171,7 @@ if __name__ == "__main__":
                     print("No noise filtering method will run.")
 
                 # ----- Save results -----
-                if is_raw:                    
+                if is_raw:
                     raw.close()
                 
                 cv2.imwrite(out_path + filename.split('.')[0] + ".tif", image)
