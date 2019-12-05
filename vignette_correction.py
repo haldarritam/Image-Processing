@@ -26,14 +26,20 @@ def correct_channel(img_array, channel, std_vig_model):
   return output_img_channel
 
 def remove_vig(img_array, std_vig_model):
-  r = correct_channel(img_array, 0, std_vig_model)
-  g = correct_channel(img_array, 1, std_vig_model)
-  b = correct_channel(img_array, 2, std_vig_model)
+  # r = correct_channel(img_array, 0, std_vig_model)
+  # g = correct_channel(img_array, 1, std_vig_model)
+  # b = correct_channel(img_array, 2, std_vig_model)
 
-  rgbArray = np.zeros((r.shape[0], r.shape[1], 3), 'uint8')
-  rgbArray[..., 0] = r
-  rgbArray[..., 1] = g
-  rgbArray[..., 2] = b
+  # rgbArray = np.zeros((r.shape[0], r.shape[1], 3), 'uint8')
+  # rgbArray[..., 0] = r
+  # rgbArray[..., 1] = g
+  # rgbArray[..., 2] = b
+
+  img_array =  cv2.cvtColor(img_array,cv2.COLOR_BGR2HSV)
+  v = correct_channel(img_array, 2, std_vig_model)
+
+  img_array[:,:,2] = v
+  rgbArray =  cv2.cvtColor(img_array,cv2.COLOR_HSV2BGR)
 
   return rgbArray
     
